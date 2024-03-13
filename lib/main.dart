@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/screens/create_room.dart';
+import 'package:tic_tac_toe/screens/join_room.dart';
 import 'package:tic_tac_toe/screens/main_menu.dart';
 import 'package:tic_tac_toe/utils/colors.dart';
 
@@ -16,6 +18,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.dark(useMaterial3: true)
           .copyWith(scaffoldBackgroundColor: bgColor),
+      routes: {
+        MainMenu.mainMenuRoute: (context) => const MainMenu(),
+        JoinRoom.joinRoomRoute: (context) => const JoinRoom(),
+        CreateRoom.createRoomRoute: (context) => const CreateRoom(),
+      },
+      initialRoute: MainMenu.mainMenuRoute,
       home: const MainMenu(),
     );
   }
