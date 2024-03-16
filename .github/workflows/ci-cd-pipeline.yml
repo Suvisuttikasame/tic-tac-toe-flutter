@@ -1,1 +1,20 @@
-# update later
+# Note: In a yml each level is padded by 2 spaces
+name: Flutter
+
+on:
+  # Runs this action when you push on master
+  push:
+    branches: ["main"]
+  # Runs this when a PR against master is created
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  flutter_job:
+    # The machine, we can also use windows-latest or ubuntu-latest
+    # We are choosing macos-latest because we will be also building for iOS
+    runs-on: macos-latest
+
+    steps:
+      # Clones the project on the machine
+      - uses: actions/checkout@v4
