@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tic_tac_toe/resources/socket_method.dart';
 import 'package:tic_tac_toe/responsive/responsive.dart';
 import 'package:tic_tac_toe/widgets/custom_button.dart';
 import 'package:tic_tac_toe/widgets/custom_text.dart';
@@ -15,6 +16,7 @@ class CreateRoom extends StatefulWidget {
 
 class _CreateRoomState extends State<CreateRoom> {
   final TextEditingController _nameControler = TextEditingController();
+  final SocketMethod _socketMethod = SocketMethod();
 
   @override
   void dispose() {
@@ -56,7 +58,11 @@ class _CreateRoomState extends State<CreateRoom> {
             SizedBox(
               height: height * 0.02,
             ),
-            CustomButton(onPressed: () {}, buttonLabel: 'Create')
+            CustomButton(
+                onPressed: () {
+                  _socketMethod.createRoom(_nameControler.text);
+                },
+                buttonLabel: 'Create')
           ],
         ),
       ),
