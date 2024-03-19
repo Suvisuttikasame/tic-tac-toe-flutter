@@ -1,25 +1,28 @@
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketClient {
   static final SocketClient _instance = SocketClient._internal();
-  static final uri = Uri.parse('ws://localhost:8080');
-  final WebSocketChannel _socket;
+  static const uri = 'http://localhost:8080';
+  late IO.Socket socket;
 
   factory SocketClient() {
     return _instance;
   }
 
-  SocketClient._internal() : _socket = WebSocketChannel.connect(uri);
-
-  Stream<dynamic> get stream {
-    return _socket.stream;
+  SocketClient._internal() {
+    _initSocket();
   }
 
-  void sendMessage(String message) {
-    _socket.sink.add(message);
+  void _initSocket() {
+    socket = IO.io(uri, <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+    });
+
+    socket.connect();
   }
 
-  void closeConnection() {
-    _socket.sink.close(1000, 'CLOSE_NORMAL');
+  static SocketClient get instance {
+    return _instance;
   }
 }

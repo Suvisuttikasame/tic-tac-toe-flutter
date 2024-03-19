@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:tic_tac_toe/resources/socket_client.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketMethod {
-  final SocketClient _socketClient = SocketClient();
+  final IO.Socket _socketClient = SocketClient.instance.socket;
   void createRoom(String name) {
     final Map<String, String> data = {
       'event': 'create-room',
       'data': name,
     };
-    final String jsonData = json.encode(data);
-    _socketClient.sendMessage(jsonData);
+    _socketClient.emit('create-room', data);
   }
 }
