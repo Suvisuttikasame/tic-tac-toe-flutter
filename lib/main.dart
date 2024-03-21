@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/screens/create_room.dart';
+import 'package:tic_tac_toe/screens/game_room.dart';
 import 'package:tic_tac_toe/screens/join_room.dart';
 import 'package:tic_tac_toe/screens/main_menu.dart';
 import 'package:tic_tac_toe/utils/colors.dart';
@@ -15,13 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Tic Tac Toe',
       theme: ThemeData.dark(useMaterial3: true)
           .copyWith(scaffoldBackgroundColor: bgColor),
       routes: {
         MainMenu.mainMenuRoute: (context) => const MainMenu(),
         JoinRoom.joinRoomRoute: (context) => const JoinRoom(),
         CreateRoom.createRoomRoute: (context) => const CreateRoom(),
+        GameRoom.gameRoomRoute: (context) => const GameRoom()
       },
       initialRoute: MainMenu.mainMenuRoute,
       home: const MainMenu(),

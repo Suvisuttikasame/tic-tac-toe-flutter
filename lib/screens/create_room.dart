@@ -19,6 +19,12 @@ class _CreateRoomState extends State<CreateRoom> {
   final SocketMethod _socketMethod = SocketMethod();
 
   @override
+  void initState() {
+    super.initState();
+    _socketMethod.listenStream(context);
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _nameControler.dispose();
