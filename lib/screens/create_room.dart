@@ -28,6 +28,7 @@ class _CreateRoomState extends State<CreateRoom> {
   void dispose() {
     super.dispose();
     _nameControler.dispose();
+    _socketMethod.disConnectSocket();
   }
 
   @override

@@ -19,4 +19,8 @@ class SocketMethod {
     _socketClient.on('create-room-success',
         (data) => {Navigator.pushNamed(context, GameRoom.gameRoomRoute)});
   }
+
+  void disConnectSocket() {
+    _socketClient.close();
+  }
 }
