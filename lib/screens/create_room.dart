@@ -21,18 +21,27 @@ class _CreateRoomState extends State<CreateRoom> {
   @override
   void initState() {
     super.initState();
-    _socketMethod.listenStream(context);
+    print('init');
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _socketMethod.onEventServer(context);
+    _socketMethod.listenOnCreateRoomSuccess(context);
   }
 
   @override
   void dispose() {
     super.dispose();
+    print('dispose');
     _nameControler.dispose();
     _socketMethod.disConnectSocket();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('build');
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(

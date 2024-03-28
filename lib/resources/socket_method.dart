@@ -17,8 +17,27 @@ class SocketMethod {
     _socketClient.emit('create-room', data);
   }
 
-  void listenStream(BuildContext context) {
+  void listenOnCreateRoomSuccess(BuildContext context) {
     _socketClient.on('create-room-success', (data) {
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateRoomData(data);
+      Navigator.pushNamed(context, GameRoom.gameRoomRoute);
+    });
+  }
+
+  void joinRoom(String name, String roomId) {
+    final Map<String, dynamic> data = {
+      'event': 'join-room',
+      'data': {
+        name: name,
+        roomId: roomId,
+      },
+    };
+    _socketClient.emit('join-room', data);
+  }
+
+  void listenOnJoinRoomSuccess(BuildContext context) {
+    _socketClient.on('join-room-success', (data) {
       Provider.of<RoomDataProvider>(context, listen: false)
           .updateRoomData(data);
       Navigator.pushNamed(context, GameRoom.gameRoomRoute);
@@ -27,5 +46,17 @@ class SocketMethod {
 
   void disConnectSocket() {
     _socketClient.close();
+  }
+
+  void onEventServer(BuildContext context) {
+    _socketClient.onConnect((data) {
+      print('connected to server');
+    });
+    _socketClient.onDisconnect((data) {
+      print('disconnected to server');
+    });
+    _socketClient.onConnectError((data) {
+      print('error connected to server');
+    });
   }
 }
