@@ -1,8 +1,11 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:tic_tac_toe/utils/config.dart';
 
 class SocketClient {
   static final SocketClient _instance = SocketClient._internal();
-  static const uri = 'http://localhost:8080';
+  static final host = AppConfig().getBaseUrl();
+
+  static final uri = 'http://$host:8080';
   late IO.Socket socket;
 
   factory SocketClient() {
