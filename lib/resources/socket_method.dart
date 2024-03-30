@@ -10,9 +10,11 @@ import 'package:tic_tac_toe/screens/game_room.dart';
 class SocketMethod {
   final IO.Socket _socketClient = SocketClient.instance.socket;
   void createRoom(String name) {
-    final Map<String, String> data = {
+    final Map<String, dynamic> data = {
       'event': 'create-room',
-      'data': name,
+      'data': {
+        'name': name,
+      },
     };
     _socketClient.emit('create-room', data);
   }
@@ -26,14 +28,16 @@ class SocketMethod {
   }
 
   void joinRoom(String name, String roomId) {
-    final Map<String, dynamic> data = {
-      'event': 'join-room',
-      'data': {
-        name: name,
-        roomId: roomId,
-      },
-    };
-    _socketClient.emit('join-room', data);
+    if (name.isNotEmpty && roomId.isNotEmpty) {
+      final Map<String, dynamic> data = {
+        'event': 'join-room',
+        'data': {
+          'name': name,
+          'roomId': roomId,
+        },
+      };
+      _socketClient.emit('join-room', data);
+    }
   }
 
   void listenOnJoinRoomSuccess(BuildContext context) {

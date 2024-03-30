@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/resources/socket_method.dart';
 import 'package:tic_tac_toe/responsive/responsive.dart';
 import 'package:tic_tac_toe/widgets/custom_button.dart';
 import 'package:tic_tac_toe/widgets/custom_text.dart';
@@ -13,7 +14,16 @@ class JoinRoom extends StatefulWidget {
 }
 
 class _JoinRoomState extends State<JoinRoom> {
+  final TextEditingController _gameControler = TextEditingController();
   final TextEditingController _nameControler = TextEditingController();
+  final SocketMethod _socketMethod = SocketMethod();
+
+  @override
+  void initState() {
+    super.initState();
+    _socketMethod.listenOnJoinRoomSuccess(context);
+    _socketMethod.onEventServer(context);
+  }
 
   @override
   void dispose() {
@@ -59,14 +69,19 @@ class _JoinRoomState extends State<JoinRoom> {
             Responsive(
               child: CustomTextField(
                 hintText: 'Enter game id',
-                textEditingController: _nameControler,
+                textEditingController: _gameControler,
                 color: const Color.fromRGBO(16, 13, 34, 1),
               ),
             ),
             SizedBox(
               height: height * 0.02,
             ),
-            CustomButton(onPressed: () {}, buttonLabel: 'Join')
+            CustomButton(
+                onPressed: () {
+                  _socketMethod.joinRoom(
+                      _nameControler.text, _gameControler.text);
+                },
+                buttonLabel: 'Join')
           ],
         ),
       ),

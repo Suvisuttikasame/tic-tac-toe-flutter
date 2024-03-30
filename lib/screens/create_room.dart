@@ -22,11 +22,6 @@ class _CreateRoomState extends State<CreateRoom> {
   void initState() {
     super.initState();
     print('init');
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
     _socketMethod.onEventServer(context);
     _socketMethod.listenOnCreateRoomSuccess(context);
   }
