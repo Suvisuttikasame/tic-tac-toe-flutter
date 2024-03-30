@@ -6,6 +6,7 @@ import 'package:tic_tac_toe/provider/room_data_provider.dart';
 import 'package:tic_tac_toe/resources/socket_client.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:tic_tac_toe/screens/game_room.dart';
+import 'package:tic_tac_toe/utils/show_snackbar.dart';
 
 class SocketMethod {
   final IO.Socket _socketClient = SocketClient.instance.socket;
@@ -54,13 +55,12 @@ class SocketMethod {
 
   void onEventServer(BuildContext context) {
     _socketClient.onConnect((data) {
-      print('connected to server');
+      showSuccessSnackBar(context, 'connected to server');
     });
-    _socketClient.onDisconnect((data) {
-      print('disconnected to server');
-    });
+    _socketClient.on(
+        'error-occur', (data) => {showErrorSnackBar(context, data)});
     _socketClient.onConnectError((data) {
-      print('error connected to server');
+      showErrorSnackBar(context, 'error connected to server');
     });
   }
 }

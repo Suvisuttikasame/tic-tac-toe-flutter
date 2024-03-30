@@ -29,6 +29,7 @@ class _JoinRoomState extends State<JoinRoom> {
   void dispose() {
     super.dispose();
     _nameControler.dispose();
+    _socketMethod.disConnectSocket();
   }
 
   @override
