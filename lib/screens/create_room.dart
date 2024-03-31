@@ -21,7 +21,8 @@ class _CreateRoomState extends State<CreateRoom> {
   @override
   void initState() {
     super.initState();
-    _socketMethod.listenStream(context);
+    _socketMethod.onEventServer(context);
+    _socketMethod.listenOnCreateRoomSuccess(context);
   }
 
   @override
