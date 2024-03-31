@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/provider/room_data_provider.dart';
 import 'package:tic_tac_toe/resources/socket_method.dart';
+import 'package:tic_tac_toe/widgets/game_board.dart';
 import 'package:tic_tac_toe/widgets/lobby.dart';
 import 'package:tic_tac_toe/widgets/score_board.dart';
 
@@ -31,11 +32,11 @@ class _GameRoomState extends State<GameRoom> {
           ? Lobby(
               roomId: roomData['_id'],
             )
-          : SafeArea(
+          : const SafeArea(
               child: Column(
                 children: [
                   ScoreBoard(),
-                  Placeholder(),
+                  GameBoard(),
                 ],
               ),
             ),
