@@ -58,6 +58,13 @@ class SocketMethod {
     });
   }
 
+  void listenOnUpdateRoom(BuildContext context) {
+    _socketClient.on('update-room', (data) {
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateRoomData(data);
+    });
+  }
+
   void disConnectSocket() {
     _socketClient.close();
   }

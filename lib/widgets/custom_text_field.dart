@@ -4,11 +4,13 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController textEditingController;
   final Color color;
+  final bool isDisabled;
   const CustomTextField({
     super.key,
     required this.hintText,
     required this.textEditingController,
     required this.color,
+    this.isDisabled = false,
   });
 
   @override
@@ -24,6 +26,7 @@ class CustomTextField extends StatelessWidget {
         )
       ]),
       child: TextField(
+        readOnly: isDisabled,
         controller: textEditingController,
         decoration: InputDecoration(
           fillColor: color,
