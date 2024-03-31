@@ -49,6 +49,15 @@ class SocketMethod {
     });
   }
 
+  void listenOnUpdatePlayer(BuildContext context) {
+    _socketClient.on('update-player', (data) {
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updatePlayer1(data[0]);
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updatePlayer2(data[1]);
+    });
+  }
+
   void disConnectSocket() {
     _socketClient.close();
   }

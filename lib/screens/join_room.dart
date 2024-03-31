@@ -22,6 +22,7 @@ class _JoinRoomState extends State<JoinRoom> {
   void initState() {
     super.initState();
     _socketMethod.listenOnJoinRoomSuccess(context);
+    _socketMethod.listenOnUpdatePlayer(context);
     _socketMethod.onEventServer(context);
   }
 
