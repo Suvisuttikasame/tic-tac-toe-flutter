@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Player {
   final String name;
   final String socketID;
