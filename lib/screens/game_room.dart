@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/provider/room_data_provider.dart';
 import 'package:tic_tac_toe/resources/socket_method.dart';
 import 'package:tic_tac_toe/widgets/lobby.dart';
+import 'package:tic_tac_toe/widgets/score_board.dart';
 
 class GameRoom extends StatefulWidget {
   static const gameRoomRoute = '/game-room';
@@ -19,6 +20,7 @@ class _GameRoomState extends State<GameRoom> {
   void initState() {
     super.initState();
     _socketMethod.listenOnUpdateRoom(context);
+    _socketMethod.listenOnUpdatePlayer(context);
   }
 
   @override
@@ -29,9 +31,13 @@ class _GameRoomState extends State<GameRoom> {
           ? Lobby(
               roomId: roomData['_id'],
             )
-          : Center(
-              child: Text(
-                  Provider.of<RoomDataProvider>(context).roomData.toString()),
+          : SafeArea(
+              child: Column(
+                children: [
+                  ScoreBoard(),
+                  Placeholder(),
+                ],
+              ),
             ),
     );
   }
