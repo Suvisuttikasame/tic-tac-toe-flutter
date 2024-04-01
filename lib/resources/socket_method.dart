@@ -10,6 +10,11 @@ import 'package:tic_tac_toe/utils/show_snackbar.dart';
 
 class SocketMethod {
   final IO.Socket _socketClient = SocketClient.instance.socket;
+
+  String? getSocketID() {
+    return _socketClient.id;
+  }
+
   void createRoom(String name) {
     final Map<String, dynamic> data = {
       'event': 'create-room',
@@ -77,6 +82,32 @@ class SocketMethod {
         'error-occur', (data) => {showErrorSnackBar(context, data)});
     _socketClient.onConnectError((data) {
       showErrorSnackBar(context, 'error connected to server');
+    });
+  }
+
+  void onTap(BuildContext context, int index, String type, String roomId) {
+    final dashBoard =
+        Provider.of<RoomDataProvider>(context, listen: false).dashBoardData;
+
+    if (dashBoard[index] == '') {
+      dashBoard[index] = type;
+      final Map<String, dynamic> data = {
+        'event': 'join-room',
+        'data': {
+          'roomId': roomId,
+          'dashBoard': dashBoard,
+        },
+      };
+      _socketClient.emit('on-tap', data);
+    }
+  }
+
+  void listenOnUpdateTap(BuildContext context) {
+    _socketClient.on('update-on-tap', (data) {
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateDashBoard(data['dashBoard']);
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateRoomData(data['room']);
     });
   }
 }
