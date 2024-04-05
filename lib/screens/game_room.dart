@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/provider/room_data_provider.dart';
 import 'package:tic_tac_toe/resources/socket_method.dart';
@@ -32,11 +33,21 @@ class _GameRoomState extends State<GameRoom> {
           ? Lobby(
               roomId: roomData['_id'],
             )
-          : const SafeArea(
+          : SafeArea(
               child: Column(
                 children: [
-                  ScoreBoard(),
-                  GameBoard(),
+                  const ScoreBoard(),
+                  const GameBoard(),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Text(
+                    '${roomData['turn']['name']}\'s turn',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),

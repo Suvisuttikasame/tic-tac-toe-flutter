@@ -33,7 +33,7 @@ class _GameBoardState extends State<GameBoard> {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return AbsorbPointer(
-          absorbing: roomData.roomData['turn']['socketID'] == socketID,
+          absorbing: roomData.roomData['turn']['socketID'] != socketID,
           child: GestureDetector(
             onTap: () {
               _socketMethod.getSocketID();
@@ -49,21 +49,26 @@ class _GameBoardState extends State<GameBoard> {
                 border: Border.all(color: Colors.white24, width: 2),
               ),
               child: Center(
-                child: Text(
-                  roomData.dashBoardData[index],
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 100,
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 30,
-                        color: roomData.dashBoardData[index] == 'X'
-                            ? Colors.blue
-                            : Colors.red,
-                      ),
-                    ],
+                child: AnimatedCrossFade(
+                  firstChild: const Text(''),
+                  secondChild: Text(
+                    roomData.dashBoardData[index],
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 100,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 30,
+                          color: roomData.dashBoardData[index] == 'X'
+                              ? Colors.blue
+                              : Colors.red,
+                        ),
+                      ],
+                    ),
                   ),
+                  duration: const Duration(milliseconds: 200),
+                  crossFadeState: CrossFadeState.showSecond,
                 ),
               ),
             ),
