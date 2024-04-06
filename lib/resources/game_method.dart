@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:socket_io_client/socket_io_client.dart';
 import 'package:tic_tac_toe/model/player.dart';
 import 'package:tic_tac_toe/provider/room_data_provider.dart';
+import 'package:tic_tac_toe/resources/socket_method.dart';
 import 'package:tic_tac_toe/utils/show_dialog.dart';
 
 class GameMethod {
-  void checkWinner(BuildContext context, Socket client) {
+  void checkWinner(BuildContext context) {
     final roomData = Provider.of<RoomDataProvider>(context, listen: false);
     Player player1 = roomData.player1;
     Player player2 = roomData.player2;
@@ -46,10 +46,7 @@ class GameMethod {
 
     if (winner != null) {
       ShowDialog().dialog(context, '${winner.name} win');
-      client.emit('winner', {
-        'winner': winner.socketID,
-        'roomId': roomData.roomData['_id'],
-      });
+      SocketMethod().updateWinner(winner.socketID, roomData.roomData['_id']);
     }
   }
 

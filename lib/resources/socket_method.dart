@@ -45,6 +45,17 @@ class SocketMethod {
     }
   }
 
+  void updateWinner(String winnerId, String roomId) {
+    final Map<String, dynamic> data = {
+      'event': 'winner',
+      'data': {
+        'winnerId': winnerId,
+        'roomId': roomId,
+      },
+    };
+    _socketClient.emit('winner', data);
+  }
+
   void listenOnJoinRoomSuccess(BuildContext context) {
     _socketClient.on('join-room-success', (data) {
       Provider.of<RoomDataProvider>(context, listen: false)
@@ -108,7 +119,7 @@ class SocketMethod {
       Provider.of<RoomDataProvider>(context, listen: false)
           .updateRoomData(data['room']);
       Provider.of<RoomDataProvider>(context, listen: false).updateRound();
-      GameMethod().checkWinner(context, _socketClient);
+      GameMethod().checkWinner(context);
     });
   }
 }
