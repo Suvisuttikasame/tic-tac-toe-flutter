@@ -46,7 +46,9 @@ class GameMethod {
 
     if (winner != null) {
       ShowDialog().dialog(context, '${winner.name} win');
-      SocketMethod().updateWinner(winner.socketID, roomData.roomData['_id']);
+      if (SocketMethod().getSocketID() == winner.socketID) {
+        SocketMethod().updateWinner(winner.socketID, roomData.roomData['_id']);
+      }
     }
   }
 
