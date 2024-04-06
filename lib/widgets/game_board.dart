@@ -29,6 +29,8 @@ class _GameBoardState extends State<GameBoard> {
       itemCount: 9,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
+        mainAxisSpacing: 2,
+        crossAxisSpacing: 2,
       ),
       shrinkWrap: true,
       itemBuilder: (context, index) {
