@@ -5,6 +5,8 @@ import 'package:tic_tac_toe/resources/game_method.dart';
 import 'package:tic_tac_toe/resources/socket_client.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:tic_tac_toe/screens/game_room.dart';
+import 'package:tic_tac_toe/screens/main_menu.dart';
+import 'package:tic_tac_toe/utils/show_dialog.dart';
 import 'package:tic_tac_toe/utils/show_snackbar.dart';
 
 class SocketMethod {
@@ -12,6 +14,10 @@ class SocketMethod {
 
   String? getSocketID() {
     return _socketClient.id;
+  }
+
+  void connectSocket() {
+    _socketClient.connect();
   }
 
   void createRoom(String name) {
@@ -81,6 +87,7 @@ class SocketMethod {
   }
 
   void disConnectSocket() {
+    _socketClient.clearListeners();
     _socketClient.close();
   }
 
@@ -121,5 +128,33 @@ class SocketMethod {
       Provider.of<RoomDataProvider>(context, listen: false).updateRound();
       GameMethod().checkWinner(context);
     });
+  }
+
+  void listenOnEndGame(BuildContext context) {
+    _socketClient.on(
+        'end-game',
+        (data) => {
+              if (data['isEnd'])
+                {
+                  ShowDialog().dialog(
+                      context,
+                      'Congraturation! ${data['winner']['name']} is a winner',
+                      'end game', () {
+                    Provider.of<RoomDataProvider>(context, listen: false)
+                        .resetState();
+
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        MainMenu.mainMenuRoute, (Route route) => false);
+                  })
+                }
+              else
+                {
+                  ShowDialog().dialog(
+                      context, '${data['winner']['name']} win', 'continue', () {
+                    GameMethod().clearBoard(context);
+                    Navigator.pop(context);
+                  })
+                }
+            });
   }
 }

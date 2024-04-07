@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tic_tac_toe/resources/socket_method.dart';
 import 'package:tic_tac_toe/responsive/responsive.dart';
 import 'package:tic_tac_toe/widgets/custom_button.dart';
@@ -23,6 +22,7 @@ class _CreateRoomState extends State<CreateRoom> {
     super.initState();
     _socketMethod.onEventServer(context);
     _socketMethod.listenOnCreateRoomSuccess(context);
+    _socketMethod.connectSocket();
   }
 
   @override

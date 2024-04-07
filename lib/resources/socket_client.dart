@@ -21,8 +21,6 @@ class SocketClient {
       'transports': ['websocket'],
       'autoConnect': false,
     });
-
-    socket.connect();
   }
 
   static SocketClient get instance {
