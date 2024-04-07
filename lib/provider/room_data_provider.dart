@@ -55,4 +55,22 @@ class RoomDataProvider extends ChangeNotifier {
     _round = 0;
     notifyListeners();
   }
+
+  void resetState() {
+    _roomData = {};
+    _dashboardData = ['', '', '', '', '', '', '', '', ''];
+    _round = 0;
+    _player1 = Player(
+      name: '',
+      points: 0,
+      socketID: '',
+      playerType: 'X',
+    );
+    _player2 = Player(
+      name: '',
+      points: 0,
+      socketID: '',
+      playerType: 'O',
+    );
+  }
 }

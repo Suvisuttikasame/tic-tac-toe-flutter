@@ -41,11 +41,13 @@ class GameMethod {
     }
     //check draw
     if (round == 9 && winner == null) {
-      ShowDialog().dialog(context, 'draw');
+      ShowDialog().dialog(context, 'draw', 'continue', () {
+        GameMethod().clearBoard(context);
+        Navigator.pop(context);
+      });
     }
 
     if (winner != null) {
-      ShowDialog().dialog(context, '${winner.name} win');
       if (SocketMethod().getSocketID() == winner.socketID) {
         SocketMethod().updateWinner(winner.socketID, roomData.roomData['_id']);
       }
