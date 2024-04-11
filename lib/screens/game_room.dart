@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/provider/room_data_provider.dart';
 import 'package:tic_tac_toe/resources/socket_method.dart';
@@ -23,6 +22,7 @@ class _GameRoomState extends State<GameRoom> {
     super.initState();
     _socketMethod.listenOnUpdateRoom(context);
     _socketMethod.listenOnUpdatePlayer(context);
+    _socketMethod.listenOnEndGame(context);
   }
 
   @override
